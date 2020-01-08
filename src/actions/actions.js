@@ -6,7 +6,11 @@ export const getData = dispatch => {
   db.collection('projects')
     .get()
     .then(snapshot => {
-      const projects = snapshot.docs.map(doc => doc.data());
+      const projects = snapshot.docs.map(doc => {
+        let project = doc.data();
+        project.id = doc.id;
+        return project;
+      });
       dispatch({
         type: 'GET_DATA',
         payload: projects

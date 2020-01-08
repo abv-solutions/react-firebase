@@ -2,7 +2,6 @@
 export const reducer = (state, action) => {
   switch (action.type) {
     case 'GET_DATA':
-      console.log(action.payload);
       return {
         ...state,
         projects: action.payload
