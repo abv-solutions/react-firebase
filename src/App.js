@@ -5,8 +5,10 @@ import './App.css';
 import ContextProvider from './contexts/context';
 
 import Navbar from './components/layout/Navbar';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Footer from './components/layout/Footer';
 import Index from './components/Index';
-import Login from './components/Login';
 
 const App = () => {
   return (
@@ -17,8 +19,10 @@ const App = () => {
           <Switch>
             <Route exact path='/' component={Index} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/register' component={Register} />
           </Switch>
         </div>
+        <Footer />
       </ContextProvider>
     </Router>
   );

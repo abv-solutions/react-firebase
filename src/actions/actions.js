@@ -1,7 +1,6 @@
 import firebase from '../config/firebaseConfig';
 const db = firebase.firestore();
 
-// Clear errors - used from components
 export const getData = dispatch => {
   db.collection('projects')
     .get()
@@ -15,5 +14,6 @@ export const getData = dispatch => {
         type: 'GET_DATA',
         payload: projects
       });
-    });
+    })
+    .catch(err => console.log(err.message));
 };

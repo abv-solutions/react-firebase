@@ -15,23 +15,21 @@ const Index = () => {
 
   return (
     <>
-      <div className='container'>
-        <i className='fas fa-music' />
-        <p>Index</p>
-        {projects.map(({ id, author, content, title }) => (
-          <div className='border' key={id}>
-            <p>
-              <strong>{title}</strong> created by {author}
-            </p>
-            <p>
-              <strong>Content:</strong> {content}
-            </p>
-            <p>
-              <strong>ID:</strong> {id}
-            </p>
-          </div>
-        ))}
-      </div>
+      <i className='fas fa-music' />
+      <p>Index</p>
+      {projects.map(({ id, author, content, title }) => (
+        <div className='border' key={id}>
+          <p>
+            <strong>{title}</strong> created by {author}
+          </p>
+          <p>
+            <strong>Content:</strong> {content}
+          </p>
+          <p>
+            <strong>ID:</strong> {id}
+          </p>
+        </div>
+      ))}
     </>
   );
 };
