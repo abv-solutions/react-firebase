@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../contexts/context';
 import { getData } from '../actions/actions';
 
-const Index = () => {
+const Dashboard = () => {
   const { state, dispatch } = useContext(Context);
   const { projects } = state;
 
@@ -34,4 +34,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Dashboard;

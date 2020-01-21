@@ -8,7 +8,7 @@ import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Footer from './components/layout/Footer';
-import Index from './components/Index';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
         <Navbar />
         <div className='container'>
           <Switch>
-            <Route exact path='/' component={Index} />
+            <Route exact path='/' component={Dashboard} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
           </Switch>
