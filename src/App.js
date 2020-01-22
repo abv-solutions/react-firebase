@@ -5,10 +5,13 @@ import './App.css';
 import ContextProvider from './contexts/context';
 
 import Navbar from './components/layout/Navbar';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
 import Footer from './components/layout/Footer';
 import Dashboard from './components/Dashboard';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import CreateProject from './components/projects/CreateProject';
+
+import ProjectDetails from './components/projects/ProjectDetails';
 
 const App = () => {
   return (
@@ -18,8 +21,10 @@ const App = () => {
         <div className='container'>
           <Switch>
             <Route exact path='/' component={Dashboard} />
-            <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/create' component={CreateProject} />
+            <Route exact path='/project/:id' component={ProjectDetails} />
           </Switch>
         </div>
         <Footer />

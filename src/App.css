@@ -1,0 +1,18 @@
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding-left: 1%;
+  padding-right: 1%;
+  margin-left: 0.5rem;
+}
+
+.project {
+  color: #212529 !important;
+  text-decoration: none !important;
+  transition: all 0.3s;
+}
+
+.project:hover {
+  transform: translateY(-5%);
+}

@@ -5,7 +5,12 @@ export const Context = createContext();
 
 const ContextProvider = ({ children }) => {
   const intialState = {
-    projects: []
+    auth: {
+      user: ''
+    },
+    project: {
+      projects: []
+    }
   };
 
   const [state, dispatch] = useReducer(reducer, intialState);

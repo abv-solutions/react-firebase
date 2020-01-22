@@ -7,7 +7,7 @@ const Navbar = () => {
       <nav className='navbar navbar-dark bg-dark navbar-expand-sm mb-5'>
         <div className='container'>
           <Link to='/' className='navbar-brand'>
-            Firebase App
+            Project Planner
           </Link>
 
           <button
@@ -32,6 +32,21 @@ const Navbar = () => {
               <li className='nav-item'>
                 <Link className='nav-link' to='/login'>
                   Login
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link className='nav-link' to='/create'>
+                  New Project
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link className='nav-link' to='/'>
+                  Logout
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link className='btn btn-info btn-circle' to='/'>
+                  AS
                 </Link>
               </li>
             </ul>

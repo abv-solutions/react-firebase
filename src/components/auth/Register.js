@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Register = props => {
+  const [localState, setState] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const onChange = e => {
+    setState({
+      ...localState,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const onSubmit = e => {
     e.preventDefault();
     props.history.push('/');
@@ -20,6 +33,7 @@ const Register = props => {
             name='name'
             className='form-control'
             placeholder='Enter your name'
+            onChange={onChange}
           ></input>
         </div>
         <div className='form-group'>
@@ -30,6 +44,7 @@ const Register = props => {
             className='form-control'
             placeholder='Enter your email'
             autoComplete='username'
+            onChange={onChange}
           ></input>
         </div>
         <div className='form-group'>
@@ -40,6 +55,7 @@ const Register = props => {
             className='form-control'
             placeholder='Enter your password'
             autoComplete='current-password'
+            onChange={onChange}
           ></input>
         </div>
         <input
