@@ -9,7 +9,8 @@ const ContextProvider = ({ children }) => {
       user: ''
     },
     project: {
-      projects: []
+      projects: [],
+      isListening: false
     }
   };
 

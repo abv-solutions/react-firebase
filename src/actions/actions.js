@@ -1,48 +1,26 @@
 import firebase from '../config/firebaseConfig';
 const db = firebase.firestore();
-let unsubscribe;
 
-export const startListener = (projects, dispatch) => {
-  unsubscribe = db.collection('projects').onSnapshot(snapshot => {
-    let changes = snapshot.docChanges();
-
-    changes.forEach(change => {
-      if (change.type === 'added') {
-        let project = change.doc.data();
-        project.id = change.doc.id;
-        projects.push(project);
-      } else if (change.type === 'removed') {
-        projects.filter(prj => {
-          if (prj.id.toString() !== change.doc.id.toString())
-            console.log('different');
-          return prj.id.toString() !== change.doc.id.toString();
-        });
-      }
-    });
-
-    console.log(projects);
-    dispatch({
-      type: 'GET_PROJECTS',
-      payload: projects
-    });
-  });
-};
-
-export const stopListener = () => {
-  if (unsubscribe) unsubscribe();
-};
-
-export const getProjects = dispatch => {
-  db.collection('projects')
-    .get()
-    .then(snapshot => {
-      const projects = snapshot.docs.map(doc => {
-        let project = doc.data();
-        project.id = doc.id;
-        return project;
+export const getProjects = (projects, dispatch) => {
+  try {
+    db.collection('projects').onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          let project = change.doc.data();
+          project.id = change.doc.id;
+          projects.push(project);
+        } else if (change.type === 'removed') {
+          projects = projects.filter(project => project.id !== change.doc.id);
+        }
       });
-    })
-    .catch(err => console.log(err.message));
+      dispatch({
+        type: 'GET_PROJECTS',
+        payload: projects
+      });
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export const createProject = (project, dispatch) => {
@@ -64,8 +42,7 @@ export const deleteProject = (id, dispatch) => {
     .delete()
     .then(() => {
       dispatch({
-        type: 'DELETE_PROJECT',
-        payload: id
+        type: 'DELETE_PROJECT'
       });
     })
     .catch(err => console.log(err.message));

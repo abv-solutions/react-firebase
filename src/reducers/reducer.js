@@ -5,22 +5,15 @@ export const reducer = (state, action) => {
       return {
         ...state,
         project: {
-          projects: action.payload
+          projects: action.payload,
+          isListening: true
         }
       };
 
     case 'CREATE_PROJECT':
-      return {
-        ...state
-      };
     case 'DELETE_PROJECT':
       return {
-        ...state,
-        project: {
-          projects: state.project.projects.filter(
-            project => project.id !== action.payload
-          )
-        }
+        ...state
       };
 
     default:

@@ -1,11 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
-import {
-  startListener,
-  stopListener,
-  deleteProject
-} from '../../actions/actions';
+import { getProjects, deleteProject } from '../../actions/actions';
 
 import Project from '../projects/Project';
 
@@ -14,8 +10,9 @@ const ProjectList = () => {
   const { project } = state;
 
   useEffect(() => {
-    stopListener();
-    startListener(project.projects, dispatch);
+    if (!project.isListening) {
+      getProjects(project.projects, dispatch);
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -28,7 +25,7 @@ const ProjectList = () => {
       <div className='col-md-6'>
         <button
           className='btn btn-danger'
-          onClick={() => onDeleteClick('C8lqmj72jABXm6a8kJk4')}
+          onClick={() => onDeleteClick('iYjZL74PDBQF0kCIS5aA')}
         >
           X
         </button>
