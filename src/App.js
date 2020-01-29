@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import CreateProject from './components/projects/CreateProject';
-
+import EditProject from './components/projects/EditProject';
 import ProjectDetails from './components/projects/ProjectDetails';
 
 const App = () => {
@@ -24,6 +24,7 @@ const App = () => {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/create' component={CreateProject} />
+            <Route exact path='/edit/:id' component={EditProject} />
             <Route exact path='/project/:id' component={ProjectDetails} />
           </Switch>
         </div>

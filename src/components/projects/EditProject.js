@@ -1,18 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
-import { createProject } from '../../actions/actions';
 
-const CreateProject = props => {
-  const { dispatch } = useContext(Context);
+const EditProject = props => {
+  const { state } = useContext(Context);
+  const { project } = state;
 
   const [localState, setState] = useState({
-    author: 'Andrei',
+    author: '',
     title: '',
     content: '',
     vTitle: 'form-control',
     vContent: 'form-control'
   });
+
+  useEffect(() => {
+    project.projects.forEach(({ id, author, title, content }) => {
+      if (id === props.match.params.id) {
+        setState({
+          ...localState,
+          author,
+          title,
+          content
+        });
+      }
+    });
+    // eslint-disable-next-line
+  }, []);
 
   const onChange = e => {
     setState({
@@ -23,18 +37,12 @@ const CreateProject = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const { author, title, content } = localState;
-    const newProject = {
-      author,
-      title,
-      content
-    };
+    const { title, content } = localState;
 
     if (title === '' || content === '') {
       validate();
     } else {
-      createProject(newProject, dispatch);
-      props.history.push('/');
+      props.history.push(`/project/${props.match.params.id}`);
     }
   };
 
@@ -60,7 +68,7 @@ const CreateProject = props => {
 
   return (
     <>
-      <h4 className='mb-4 text-center'>Create Project</h4>
+      <h4 className='mb-4 text-center'>Edit Project</h4>
       <form
         className='col-lg-8 col-md-10 mx-auto py-3 border rounded'
         onSubmit={onSubmit}
@@ -72,6 +80,7 @@ const CreateProject = props => {
             name='title'
             className={localState.vTitle}
             placeholder='Enter project title'
+            value={localState.title}
             onChange={onChange}
           ></input>
         </div>
@@ -83,12 +92,13 @@ const CreateProject = props => {
             className={localState.vContent}
             placeholder='Enter project content'
             rows='4'
+            value={localState.content}
             onChange={onChange}
           ></textarea>
         </div>
         <input
           type='submit'
-          value='Create'
+          value='Edit'
           className='btn btn-dark btn-block mt-4'
         ></input>
       </form>
@@ -96,4 +106,4 @@ const CreateProject = props => {
   );
 };
 
-export default CreateProject;
+export default EditProject;

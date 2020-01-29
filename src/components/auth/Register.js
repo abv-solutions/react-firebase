@@ -27,7 +27,7 @@ const Register = props => {
         onSubmit={onSubmit}
       >
         <div className='form-group'>
-          <label htmlFor='name'>Name</label>
+          <label>Name</label>
           <input
             type='text'
             name='name'
@@ -37,7 +37,7 @@ const Register = props => {
           ></input>
         </div>
         <div className='form-group'>
-          <label htmlFor='email'>Email</label>
+          <label>Email</label>
           <input
             type='text'
             name='email'
@@ -48,7 +48,7 @@ const Register = props => {
           ></input>
         </div>
         <div className='form-group'>
-          <label htmlFor='password'>Password</label>
+          <label>Password</label>
           <input
             type='password'
             name='password'

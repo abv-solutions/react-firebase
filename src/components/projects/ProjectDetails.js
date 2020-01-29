@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
+import { deleteProject } from '../../actions/actions';
 
 const ProjectDetails = props => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const { project } = state;
 
   const [localState, setState] = useState({
@@ -25,6 +26,15 @@ const ProjectDetails = props => {
     // eslint-disable-next-line
   }, []);
 
+  const onDeleteClick = id => {
+    deleteProject(id, dispatch);
+    props.history.push('/');
+  };
+
+  const onEditClick = id => {
+    props.history.push(`/edit/${props.match.params.id}`);
+  };
+
   return (
     <div className='col-12 mx-auto border rounded p-4'>
       <h4 className='mb-4'>Project Details</h4>
@@ -36,6 +46,18 @@ const ProjectDetails = props => {
         {localState.author}
       </p>
       <p>3rd September, 4pm</p>
+      <button
+        className='btn btn-info mr-3'
+        onClick={() => onEditClick(props.match.params.id)}
+      >
+        Edit
+      </button>
+      <button
+        className='btn btn-danger'
+        onClick={() => onDeleteClick(props.match.params.id)}
+      >
+        Delete
+      </button>
     </div>
   );
 };
