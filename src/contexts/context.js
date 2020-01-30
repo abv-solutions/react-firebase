@@ -6,12 +6,13 @@ export const Context = createContext();
 const ContextProvider = ({ children }) => {
   const intialState = {
     auth: {
-      user: ''
+      user: {}
     },
     project: {
       projects: [],
       isListening: false
-    }
+    },
+    error: {}
   };
 
   const [state, dispatch] = useReducer(reducer, intialState);

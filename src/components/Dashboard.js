@@ -5,7 +5,7 @@ import ProjectList from './projects/ProjectList';
 
 const Dashboard = () => {
   return (
-    <div className='row mb-5 pb-5'>
+    <div className='row pb-4'>
       <ProjectList />
       <Notifications />
     </div>

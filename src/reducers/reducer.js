@@ -1,5 +1,7 @@
 // Return function for each action type
 export const reducer = (state, action) => {
+  // Project reducer
+
   switch (action.type) {
     case 'GET_PROJECTS':
       return {
@@ -10,10 +12,49 @@ export const reducer = (state, action) => {
         }
       };
 
+    case 'EDIT_PROJECT':
+      return {
+        ...state,
+        project: {
+          projects: state.project.projects.map(project =>
+            project.id === action.payload.id
+              ? {
+                  // Update the project
+                  ...project,
+                  title: action.payload.title,
+                  content: action.payload.content
+                }
+              : project
+          ),
+          isListening: state.project.isListening
+        }
+      };
+
     case 'CREATE_PROJECT':
     case 'DELETE_PROJECT':
       return {
         ...state
+      };
+
+    // Project reducer
+
+    case 'USER_LOADED':
+    case 'LOGIN':
+    case 'REGISTER':
+      return {
+        ...state,
+        auth: {
+          user: action.payload
+        }
+      };
+
+    case 'AUTH_ERROR':
+    case 'LOGOUT':
+      return {
+        ...state,
+        auth: {
+          user: {}
+        }
       };
 
     default:

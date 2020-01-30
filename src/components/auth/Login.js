@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import { Context } from '../../contexts/context';
+import { login } from '../../actions/authActions';
 
 const Login = props => {
+  const { dispatch } = useContext(Context);
   const [localState, setState] = useState({
     email: '',
     password: ''
@@ -15,6 +19,13 @@ const Login = props => {
 
   const onSubmit = e => {
     e.preventDefault();
+    const { email, password } = localState;
+    const user = {
+      email,
+      password
+    };
+
+    login(user, dispatch);
     props.history.push('/');
   };
 
@@ -22,7 +33,7 @@ const Login = props => {
     <>
       <h4 className='mb-4 text-center'>Sign In</h4>
       <form
-        className='col-lg-8 col-md-10 mx-auto py-3 border rounded'
+        className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
         onSubmit={onSubmit}
       >
         <div className='form-group'>

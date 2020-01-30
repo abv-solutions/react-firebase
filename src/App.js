@@ -18,7 +18,7 @@ const App = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <ContextProvider>
         <Navbar />
-        <div className='container'>
+        <div className='container pb-5'>
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route exact path='/register' component={Register} />

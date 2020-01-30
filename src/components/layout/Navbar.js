@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Context } from '../../contexts/context';
+import { logout } from '../../actions/authActions';
+
 const Navbar = () => {
+  const { dispatch } = useContext(Context);
+  const onClick = () => {
+    logout(dispatch);
+  };
+
   return (
     <>
       <nav className='navbar navbar-dark bg-dark navbar-expand-sm mb-5'>
@@ -40,7 +48,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link className='nav-link' to='/'>
+                <Link onClick={onClick} className='nav-link' to='/'>
                   Logout
                 </Link>
               </li>

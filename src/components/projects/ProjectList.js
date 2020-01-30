@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
-import { getProjects } from '../../actions/actions';
+import { getProjects } from '../../actions/projectActions';
+import { loadUser } from '../../actions/authActions';
 
 import Project from '../projects/Project';
 
@@ -13,6 +14,7 @@ const ProjectList = () => {
     if (!project.isListening) {
       getProjects(project.projects, dispatch);
     }
+    loadUser(dispatch);
     // eslint-disable-next-line
   }, []);
 

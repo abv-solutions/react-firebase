@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react';
 
 import { Context } from '../../contexts/context';
-import { createProject } from '../../actions/actions';
+import { createProject } from '../../actions/projectActions';
 
 const CreateProject = props => {
   const { dispatch } = useContext(Context);
-
   const [localState, setState] = useState({
     author: 'Andrei',
     title: '',
@@ -39,22 +38,13 @@ const CreateProject = props => {
   };
 
   const validate = () => {
-    let vT, vC;
-    vT = vC = 'form-control is-valid';
     const { title, content } = localState;
-
-    if (title === '' && content === '') {
-      vT = vC = 'form-control is-invalid';
-    } else if (title !== '') {
-      vC = 'form-control is-invalid';
-    } else {
-      vT = 'form-control is-invalid';
-    }
-
     setState({
       ...localState,
-      vTitle: vT,
-      vContent: vC
+      vTitle:
+        title === '' ? 'form-control is-invalid' : 'form-control is-valid',
+      vContent:
+        content === '' ? 'form-control is-invalid' : 'form-control is-valid'
     });
   };
 
@@ -62,7 +52,7 @@ const CreateProject = props => {
     <>
       <h4 className='mb-4 text-center'>Create Project</h4>
       <form
-        className='col-lg-8 col-md-10 mx-auto py-3 border rounded'
+        className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
         onSubmit={onSubmit}
       >
         <div className='form-group'>

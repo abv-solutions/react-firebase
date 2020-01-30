@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import { Context } from '../../contexts/context';
+import { register } from '../../actions/authActions';
 
 const Register = props => {
+  const { dispatch } = useContext(Context);
   const [localState, setState] = useState({
     name: '',
     email: '',
@@ -16,6 +20,13 @@ const Register = props => {
 
   const onSubmit = e => {
     e.preventDefault();
+    const { email, password } = localState;
+    const newUser = {
+      email,
+      password
+    };
+
+    register(newUser, dispatch);
     props.history.push('/');
   };
 
@@ -23,7 +34,7 @@ const Register = props => {
     <>
       <h4 className='mb-4 text-center'>Sign Up</h4>
       <form
-        className='col-lg-8 col-md-10 mx-auto py-3 border rounded'
+        className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
         onSubmit={onSubmit}
       >
         <div className='form-group'>

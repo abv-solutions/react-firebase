@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
+import { editProject } from '../../actions/projectActions';
 
 const EditProject = props => {
-  const { state } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const { project } = state;
-
   const [localState, setState] = useState({
     author: '',
     title: '',
@@ -38,31 +38,28 @@ const EditProject = props => {
   const onSubmit = e => {
     e.preventDefault();
     const { title, content } = localState;
+    const project = {
+      id: props.match.params.id,
+      title,
+      content
+    };
 
     if (title === '' || content === '') {
       validate();
     } else {
+      editProject(project, dispatch);
       props.history.push(`/project/${props.match.params.id}`);
     }
   };
 
   const validate = () => {
-    let vT, vC;
-    vT = vC = 'form-control is-valid';
     const { title, content } = localState;
-
-    if (title === '' && content === '') {
-      vT = vC = 'form-control is-invalid';
-    } else if (title !== '') {
-      vC = 'form-control is-invalid';
-    } else {
-      vT = 'form-control is-invalid';
-    }
-
     setState({
       ...localState,
-      vTitle: vT,
-      vContent: vC
+      vTitle:
+        title === '' ? 'form-control is-invalid' : 'form-control is-valid',
+      vContent:
+        content === '' ? 'form-control is-invalid' : 'form-control is-valid'
     });
   };
 
@@ -70,7 +67,7 @@ const EditProject = props => {
     <>
       <h4 className='mb-4 text-center'>Edit Project</h4>
       <form
-        className='col-lg-8 col-md-10 mx-auto py-3 border rounded'
+        className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
         onSubmit={onSubmit}
       >
         <div className='form-group'>
