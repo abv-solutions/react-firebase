@@ -38,13 +38,12 @@ export const reducer = (state, action) => {
 
     // Project reducer
 
-    case 'USER_LOADED':
-    case 'LOGIN':
-    case 'REGISTER':
+    case 'AUTH_SUCCESS':
       return {
         ...state,
         auth: {
-          user: action.payload
+          user: action.payload,
+          isListening: true
         }
       };
 
@@ -53,8 +52,15 @@ export const reducer = (state, action) => {
       return {
         ...state,
         auth: {
-          user: {}
+          user: {},
+          isListening: true
         }
+      };
+
+    case 'LOGIN':
+    case 'REGISTER':
+      return {
+        ...state
       };
 
     default:

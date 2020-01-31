@@ -1,13 +1,13 @@
 import firebase from '../config/firebaseConfig';
 const auth = firebase.auth();
 
-export const loadUser = dispatch => {
+export const getUser = dispatch => {
   try {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, email } = user;
         dispatch({
-          type: 'USER_LOADED',
+          type: 'AUTH_SUCCESS',
           payload: { uid, email }
         });
       } else {
@@ -16,7 +16,6 @@ export const loadUser = dispatch => {
         });
       }
     });
-    unsubscribe();
   } catch (err) {
     console.log(err.message);
   }

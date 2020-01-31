@@ -6,7 +6,8 @@ export const Context = createContext();
 const ContextProvider = ({ children }) => {
   const intialState = {
     auth: {
-      user: {}
+      user: {},
+      isListening: false
     },
     project: {
       projects: [],
