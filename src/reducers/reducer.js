@@ -1,4 +1,3 @@
-// Return function for each action type
 export const reducer = (state, action) => {
   // Project reducer
 
@@ -8,7 +7,8 @@ export const reducer = (state, action) => {
         ...state,
         project: {
           projects: action.payload,
-          isListening: true
+          isListening: true,
+          isLoading: false
         }
       };
 
@@ -26,7 +26,8 @@ export const reducer = (state, action) => {
                 }
               : project
           ),
-          isListening: state.project.isListening
+          isListening: state.project.isListening,
+          isLoading: state.project.isLoading
         }
       };
 
@@ -35,15 +36,25 @@ export const reducer = (state, action) => {
       return {
         ...state
       };
+    case 'PROJECTS_LOADING':
+      return {
+        ...state,
+        project: {
+          projects: state.project.projects,
+          isListening: state.project.isListening,
+          isLoading: true
+        }
+      };
 
-    // Project reducer
+    // Auth reducer
 
     case 'AUTH_SUCCESS':
       return {
         ...state,
         auth: {
           user: action.payload,
-          isListening: true
+          isListening: true,
+          isLoading: false
         }
       };
 
@@ -53,7 +64,8 @@ export const reducer = (state, action) => {
         ...state,
         auth: {
           user: {},
-          isListening: true
+          isListening: true,
+          isLoading: false
         }
       };
 
@@ -61,6 +73,16 @@ export const reducer = (state, action) => {
     case 'REGISTER':
       return {
         ...state
+      };
+
+    case 'AUTH_LOADING':
+      return {
+        ...state,
+        auth: {
+          user: state.auth.user,
+          isListening: state.auth.isListening,
+          isLoading: true
+        }
       };
 
     default:

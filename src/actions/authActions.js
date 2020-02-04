@@ -23,6 +23,8 @@ export const getUser = dispatch => {
 
 export const register = (user, dispatch) => {
   const { email, password } = user;
+  // User loading
+  dispatch(userLoading());
   auth
     .createUserWithEmailAndPassword(email, password)
     .then(cred => {
@@ -37,6 +39,8 @@ export const register = (user, dispatch) => {
 
 export const login = (user, dispatch) => {
   const { email, password } = user;
+  // User loading
+  dispatch(userLoading());
   auth
     .signInWithEmailAndPassword(email, password)
     .then(cred => {
@@ -58,4 +62,11 @@ export const logout = dispatch => {
       });
     })
     .catch(err => console.log(err.message));
+};
+
+// Set loading flag - used locally
+export const userLoading = () => {
+  return {
+    type: 'AUTH_LOADING'
+  };
 };

@@ -1,14 +1,57 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Context } from '../../contexts/context';
-import { logout } from '../../actions/authActions';
+import { getProjects } from '../../actions/projectActions';
+import { getUser, logout } from '../../actions/authActions';
 
 const Navbar = () => {
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { project, auth } = state;
+
+  useEffect(() => {
+    !auth.isListening && getUser(dispatch);
+    !project.isListening && getProjects(project.projects, dispatch);
+    // eslint-disable-next-line
+  }, []);
+
   const onClick = () => {
     logout(dispatch);
   };
+  const guestLinks = (
+    <>
+      <li className='nav-item'>
+        <Link className='nav-link' to='/register'>
+          Register
+        </Link>
+      </li>
+      <li className='nav-item'>
+        <Link className='nav-link' to='/login'>
+          Login
+        </Link>
+      </li>{' '}
+    </>
+  );
+
+  const authLinks = (
+    <>
+      <li className='nav-item'>
+        <Link className='nav-link' to='/create'>
+          New Project
+        </Link>
+      </li>
+      <li className='nav-item'>
+        <Link onClick={onClick} className='nav-link' to='/'>
+          Logout
+        </Link>
+      </li>
+      <li className='nav-item'>
+        <Link className='btn btn-info btn-circle' to='/'>
+          AS
+        </Link>
+      </li>{' '}
+    </>
+  );
 
   return (
     <>
@@ -32,31 +75,11 @@ const Navbar = () => {
 
           <div className='collapse navbar-collapse' id='navbarNavDropdown'>
             <ul className='navbar-nav ml-auto'>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/register'>
-                  Register
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/login'>
-                  Login
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/create'>
-                  New Project
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link onClick={onClick} className='nav-link' to='/'>
-                  Logout
-                </Link>
-              </li>
-              <li className='nav-item'>
-                <Link className='btn btn-info btn-circle' to='/'>
-                  AS
-                </Link>
-              </li>
+              {!auth.isLoading
+                ? auth.user.uid
+                  ? authLinks
+                  : guestLinks
+                : null}
             </ul>
           </div>
         </div>

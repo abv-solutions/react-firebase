@@ -5,7 +5,7 @@ import { editProject } from '../../actions/projectActions';
 
 const EditProject = props => {
   const { state, dispatch } = useContext(Context);
-  const { project } = state;
+  const { project, auth } = state;
   const [localState, setState] = useState({
     author: '',
     title: '',
@@ -65,40 +65,48 @@ const EditProject = props => {
 
   return (
     <>
-      <h4 className='mb-4 text-center'>Edit Project</h4>
-      <form
-        className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
-        onSubmit={onSubmit}
-      >
-        <div className='form-group'>
-          <label>Title</label>
-          <input
-            type='text'
-            name='title'
-            className={localState.vTitle}
-            placeholder='Enter project title'
-            value={localState.title}
-            onChange={onChange}
-          ></input>
-        </div>
-        <div className='form-group'>
-          <label>Content</label>
-          <textarea
-            type='text'
-            name='content'
-            className={localState.vContent}
-            placeholder='Enter project content'
-            rows='4'
-            value={localState.content}
-            onChange={onChange}
-          ></textarea>
-        </div>
-        <input
-          type='submit'
-          value='Edit'
-          className='btn btn-dark btn-block mt-4'
-        ></input>
-      </form>
+      {!auth.isLoading ? (
+        auth.user.uid ? (
+          <>
+            <h4 className='mb-4 text-center'>Edit Project</h4>
+            <form
+              className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
+              onSubmit={onSubmit}
+            >
+              <div className='form-group'>
+                <label>Title</label>
+                <input
+                  type='text'
+                  name='title'
+                  className={localState.vTitle}
+                  placeholder='Enter project title'
+                  value={localState.title}
+                  onChange={onChange}
+                ></input>
+              </div>
+              <div className='form-group'>
+                <label>Content</label>
+                <textarea
+                  type='text'
+                  name='content'
+                  className={localState.vContent}
+                  placeholder='Enter project content'
+                  rows='4'
+                  value={localState.content}
+                  onChange={onChange}
+                ></textarea>
+              </div>
+              <input
+                type='submit'
+                value='Edit'
+                className='btn btn-dark btn-block mt-4'
+              ></input>
+            </form>
+          </>
+        ) : (
+          <h4 className='pb-5 text-center'>Please sign in to edit projects</h4>
+        )
+      ) : null}
     </>
   );
 };

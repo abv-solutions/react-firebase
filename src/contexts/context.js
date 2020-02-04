@@ -7,11 +7,13 @@ const ContextProvider = ({ children }) => {
   const intialState = {
     auth: {
       user: {},
-      isListening: false
+      isListening: false,
+      isLoading: true
     },
     project: {
       projects: [],
-      isListening: false
+      isListening: false,
+      isLoading: true
     },
     error: {}
   };

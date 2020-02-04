@@ -6,6 +6,8 @@ export const getProjects = (projects, dispatch) => {
     db.collection('projects')
       .orderBy('title')
       .onSnapshot(snapshot => {
+        // Projects loading
+        dispatch(projectsLoading());
         snapshot.docChanges().forEach(change => {
           if (change.type === 'added') {
             let project = change.doc.data();
@@ -65,4 +67,11 @@ export const deleteProject = (id, dispatch) => {
       });
     })
     .catch(err => console.log(err.message));
+};
+
+// Set loading flag - used locally
+export const projectsLoading = () => {
+  return {
+    type: 'PROJECTS_LOADING'
+  };
 };
