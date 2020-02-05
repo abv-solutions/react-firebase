@@ -1,15 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { Context } from '../../contexts/context';
 import { login } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
+import Spinner from '../layout/Spinner';
 
 const Login = props => {
   const { state, dispatch } = useContext(Context);
-  const { auth } = state;
+  const { auth, error } = state;
   const [localState, setState] = useState({
     email: '',
-    password: ''
+    password: '',
+    vEmail: 'form-control',
+    vPassword: 'form-control'
   });
+
+  useEffect(() => {
+    !error.code && auth.user && props.history.push('/');
+    // eslint-disable-next-line
+  }, [auth.user]);
 
   const onChange = e => {
     setState({
@@ -26,53 +35,66 @@ const Login = props => {
       password
     };
 
-    login(user, dispatch);
-    props.history.push('/');
+    if (email === '' || password === '') {
+      validate();
+    } else {
+      clearErrors(dispatch);
+      login(user, dispatch);
+    }
+  };
+
+  const validate = () => {
+    const { email, password } = localState;
+    setState({
+      ...localState,
+      vEmail:
+        email === '' ? 'form-control is-invalid' : 'form-control is-valid',
+      vPassword:
+        password === '' ? 'form-control is-invalid' : 'form-control is-valid'
+    });
   };
 
   return (
     <>
       {!auth.isLoading ? (
-        !auth.user.uid ? (
-          <>
-            <h4 className='mb-4 text-center'>Sign In</h4>
-            <form
-              className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
-              onSubmit={onSubmit}
-            >
-              <div className='form-group'>
-                <label>Email</label>
-                <input
-                  type='text'
-                  name='email'
-                  className='form-control'
-                  placeholder='Enter your email'
-                  autoComplete='username'
-                  onChange={onChange}
-                ></input>
-              </div>
-              <div className='form-group'>
-                <label>Password</label>
-                <input
-                  type='password'
-                  name='password'
-                  className='form-control'
-                  placeholder='Enter your password'
-                  autoComplete='current-password'
-                  onChange={onChange}
-                ></input>
-              </div>
+        <>
+          <h4 className='mb-4 text-center'>Sign In</h4>
+          <form
+            className='col-lg-8 col-md-10 mx-auto py-3 mb-5 border rounded'
+            onSubmit={onSubmit}
+          >
+            <div className='form-group'>
+              <label>Email</label>
               <input
-                type='submit'
-                value='Login'
-                className='btn btn-dark btn-block mt-4'
+                type='text'
+                name='email'
+                className={localState.vEmail}
+                placeholder='Enter your email'
+                autoComplete='username'
+                onChange={onChange}
               ></input>
-            </form>
-          </>
-        ) : (
-          <h4 className='pb-5 text-center'>You are signed in</h4>
-        )
-      ) : null}
+            </div>
+            <div className='form-group'>
+              <label>Password</label>
+              <input
+                type='password'
+                name='password'
+                className={localState.vPassword}
+                placeholder='Enter your password'
+                autoComplete='current-password'
+                onChange={onChange}
+              ></input>
+            </div>
+            <input
+              type='submit'
+              value='Login'
+              className='btn btn-dark btn-block mt-4'
+            ></input>
+          </form>
+        </>
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };

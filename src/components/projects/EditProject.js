@@ -66,7 +66,7 @@ const EditProject = props => {
   return (
     <>
       {!auth.isLoading ? (
-        auth.user.uid ? (
+        auth.user ? (
           <>
             <h4 className='mb-4 text-center'>Edit Project</h4>
             <form

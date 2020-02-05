@@ -3,11 +3,11 @@ const db = firebase.firestore();
 
 export const getProjects = (projects, dispatch) => {
   try {
+    // Projects loading
+    dispatch(projectsLoading());
     db.collection('projects')
       .orderBy('title')
       .onSnapshot(snapshot => {
-        // Projects loading
-        dispatch(projectsLoading());
         snapshot.docChanges().forEach(change => {
           if (change.type === 'added') {
             let project = change.doc.data();

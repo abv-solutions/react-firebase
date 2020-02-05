@@ -39,7 +39,7 @@ const ProjectDetails = props => {
   return (
     <>
       {!auth.isLoading ? (
-        auth.user.uid ? (
+        auth.user ? (
           <div className='col-12 mx-auto border rounded p-4 mb-5'>
             <h4 className='mb-4'>Project Details</h4>
             <h5 className='mb-3 text-info'>{localState.title}</h5>

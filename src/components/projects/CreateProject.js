@@ -52,7 +52,7 @@ const CreateProject = props => {
   return (
     <>
       {!auth.isLoading ? (
-        auth.user.uid ? (
+        auth.user ? (
           <>
             <h4 className='mb-4 text-center'>Create Project</h4>
             <form

@@ -11,9 +11,11 @@ const Navbar = () => {
 
   useEffect(() => {
     !auth.isListening && getUser(dispatch);
-    !project.isListening && getProjects(project.projects, dispatch);
+    !project.isListening &&
+      auth.user &&
+      getProjects(project.projects, dispatch);
     // eslint-disable-next-line
-  }, []);
+  }, [auth.user]);
 
   const onClick = () => {
     logout(dispatch);
@@ -29,7 +31,7 @@ const Navbar = () => {
         <Link className='nav-link' to='/login'>
           Login
         </Link>
-      </li>{' '}
+      </li>
     </>
   );
 
@@ -49,7 +51,7 @@ const Navbar = () => {
         <Link className='btn btn-info btn-circle' to='/'>
           AS
         </Link>
-      </li>{' '}
+      </li>
     </>
   );
 
@@ -75,11 +77,7 @@ const Navbar = () => {
 
           <div className='collapse navbar-collapse' id='navbarNavDropdown'>
             <ul className='navbar-nav ml-auto'>
-              {!auth.isLoading
-                ? auth.user.uid
-                  ? authLinks
-                  : guestLinks
-                : null}
+              {!auth.isLoading ? (auth.user ? authLinks : guestLinks) : null}
             </ul>
           </div>
         </div>

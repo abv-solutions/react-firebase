@@ -1,7 +1,7 @@
 export const reducer = (state, action) => {
-  // Project reducer
-
   switch (action.type) {
+    // Project reducer
+
     case 'GET_PROJECTS':
       return {
         ...state,
@@ -36,6 +36,7 @@ export const reducer = (state, action) => {
       return {
         ...state
       };
+
     case 'PROJECTS_LOADING':
       return {
         ...state,
@@ -60,10 +61,13 @@ export const reducer = (state, action) => {
 
     case 'AUTH_ERROR':
     case 'LOGOUT':
+    case 'LOGOUT_FAIL':
+    case 'LOGIN_FAIL':
+    case 'REGISTER_FAIL':
       return {
         ...state,
         auth: {
-          user: {},
+          user: null,
           isListening: true,
           isLoading: false
         }
@@ -82,6 +86,28 @@ export const reducer = (state, action) => {
           user: state.auth.user,
           isListening: state.auth.isListening,
           isLoading: true
+        }
+      };
+
+    // Error reducer
+
+    case 'GET_ERRORS':
+      return {
+        ...state,
+        error: {
+          msg: action.payload.msg,
+          code: action.payload.code,
+          type: action.payload.type
+        }
+      };
+
+    case 'CLEAR_ERRORS':
+      return {
+        ...state,
+        error: {
+          msg: null,
+          code: null,
+          type: null
         }
       };
 

@@ -1,4 +1,5 @@
 import firebase from '../config/firebaseConfig';
+import { returnErrors } from './errorActions';
 const auth = firebase.auth();
 
 export const getUser = dispatch => {
@@ -34,7 +35,12 @@ export const register = (user, dispatch) => {
         payload: { uid, email }
       });
     })
-    .catch(err => console.log(err.message));
+    .catch(err => {
+      dispatch(returnErrors(err.message, err.code, 'REGISTER_FAIL'));
+      dispatch({
+        type: 'REGISTER_FAIL'
+      });
+    });
 };
 
 export const login = (user, dispatch) => {
@@ -50,7 +56,12 @@ export const login = (user, dispatch) => {
         payload: { uid, email }
       });
     })
-    .catch(err => console.log(err.message));
+    .catch(err => {
+      dispatch(returnErrors(err.message, err.code, 'LOGIN_FAIL'));
+      dispatch({
+        type: 'LOGIN_FAIL'
+      });
+    });
 };
 
 export const logout = dispatch => {
@@ -61,7 +72,12 @@ export const logout = dispatch => {
         type: 'LOGOUT'
       });
     })
-    .catch(err => console.log(err.message));
+    .catch(err => {
+      dispatch(returnErrors(err.message, err.code, 'LOGOUT_FAIL'));
+      dispatch({
+        type: 'LOGOUT_FAIL'
+      });
+    });
 };
 
 // Set loading flag - used locally
