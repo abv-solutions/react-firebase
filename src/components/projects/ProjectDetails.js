@@ -15,17 +15,23 @@ const ProjectDetails = props => {
   });
 
   useEffect(() => {
-    project.projects.forEach(({ id, author, title, content }) => {
-      if (id === props.match.params.id) {
-        setState({
-          author,
-          title,
-          content
-        });
-      }
-    });
+    !auth.user && props.history.push('/login');
     // eslint-disable-next-line
-  }, [project.isLoading]);
+  }, [auth.user]);
+
+  useEffect(() => {
+    !project.isLoading &&
+      project.projects.forEach(({ id, author, title, content }) => {
+        if (id === props.match.params.id) {
+          setState({
+            author,
+            title,
+            content
+          });
+        }
+      });
+    // eslint-disable-next-line
+  }, [project]);
 
   const onDeleteClick = id => {
     deleteProject(id, dispatch);
@@ -33,41 +39,35 @@ const ProjectDetails = props => {
   };
 
   const onEditClick = id => {
-    props.history.push(`/edit/${props.match.params.id}`);
+    props.history.push(`/edit/${id}`);
   };
 
   return (
     <>
-      {!auth.isLoading ? (
-        auth.user ? (
-          <div className='col-12 mx-auto border rounded p-4 mb-5'>
-            <h4 className='mb-4'>Project Details</h4>
-            <h5 className='mb-3 text-info'>{localState.title}</h5>
-            <p>{localState.content}</p>
-            <hr />
-            <p>
-              <strong>Posted by&nbsp;</strong>
-              {localState.author}
-            </p>
-            <p>3rd September, 4pm</p>
-            <button
-              className='btn btn-info mr-3'
-              onClick={() => onEditClick(props.match.params.id)}
-            >
-              Edit
-            </button>
-            <button
-              className='btn btn-danger'
-              onClick={() => onDeleteClick(props.match.params.id)}
-            >
-              Delete
-            </button>
-          </div>
-        ) : (
-          <h4 className='pb-5 text-center'>
-            Please sign in to view project details
-          </h4>
-        )
+      {!auth.isLoading && !project.isLoading && auth.user ? (
+        <div className='col-12 mx-auto border rounded p-4 mb-5'>
+          <h4 className='mb-4'>Project Details</h4>
+          <h5 className='mb-3 text-info'>{localState.title}</h5>
+          <p>{localState.content}</p>
+          <hr />
+          <p>
+            <strong>Posted by&nbsp;</strong>
+            {localState.author}
+          </p>
+          <p>3rd September, 4pm</p>
+          <button
+            className='btn btn-info mr-3'
+            onClick={() => onEditClick(props.match.params.id)}
+          >
+            Edit
+          </button>
+          <button
+            className='btn btn-danger'
+            onClick={() => onDeleteClick(props.match.params.id)}
+          >
+            Delete
+          </button>
+        </div>
       ) : (
         <Spinner />
       )}

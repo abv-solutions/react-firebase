@@ -17,13 +17,11 @@ const Dashboard = props => {
 
   return (
     <>
-      {!auth.isLoading ? (
-        auth.user && (
-          <div className='row pb-4'>
-            <ProjectList />
-            <Notifications />
-          </div>
-        )
+      {!auth.isLoading && auth.user ? (
+        <div className='row pb-4'>
+          <ProjectList />
+          <Notifications />
+        </div>
       ) : (
         <Spinner />
       )}

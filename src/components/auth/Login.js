@@ -7,7 +7,7 @@ import Spinner from '../layout/Spinner';
 
 const Login = props => {
   const { state, dispatch } = useContext(Context);
-  const { auth, error } = state;
+  const { project, auth, error } = state;
   const [localState, setState] = useState({
     email: '',
     password: '',
@@ -16,7 +16,12 @@ const Login = props => {
   });
 
   useEffect(() => {
-    !error.code && auth.user && props.history.push('/');
+    clearErrors(dispatch);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    !error.code && auth.user && props.history.goBack();
     // eslint-disable-next-line
   }, [auth.user]);
 
@@ -40,6 +45,13 @@ const Login = props => {
     } else {
       clearErrors(dispatch);
       login(user, dispatch);
+      setState({
+        ...localState,
+        email: '',
+        password: '',
+        vEmail: 'form-control',
+        vPassword: 'form-control'
+      });
     }
   };
 
@@ -56,7 +68,7 @@ const Login = props => {
 
   return (
     <>
-      {!auth.isLoading ? (
+      {!auth.isLoading && !project.isLoading && !auth.user ? (
         <>
           <h4 className='mb-4 text-center'>Sign In</h4>
           <form
@@ -90,6 +102,9 @@ const Login = props => {
               value='Login'
               className='btn btn-dark btn-block mt-4'
             ></input>
+            {error.code && (
+              <div class='alert alert-danger text-center mt-4'>{error.msg}</div>
+            )}
           </form>
         </>
       ) : (

@@ -7,7 +7,7 @@ import Spinner from '../layout/Spinner';
 
 const Register = props => {
   const { state, dispatch } = useContext(Context);
-  const { auth, error } = state;
+  const { project, auth, error } = state;
   const [localState, setState] = useState({
     name: '',
     email: '',
@@ -16,6 +16,11 @@ const Register = props => {
     vEmail: 'form-control',
     vPassword: 'form-control'
   });
+
+  useEffect(() => {
+    clearErrors(dispatch);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     !error.code && auth.user && props.history.push('/');
@@ -43,6 +48,7 @@ const Register = props => {
       clearErrors(dispatch);
       register(newUser, dispatch);
       setState({
+        ...localState,
         name: '',
         email: '',
         password: '',
@@ -67,7 +73,7 @@ const Register = props => {
 
   return (
     <>
-      {!auth.isLoading ? (
+      {!auth.isLoading && !project.isLoading && !auth.user ? (
         <>
           <h4 className='mb-4 text-center'>Sign Up</h4>
           <form
@@ -111,6 +117,9 @@ const Register = props => {
               value='Register'
               className='btn btn-dark btn-block mt-4'
             ></input>
+            {error.code && (
+              <div class='alert alert-danger text-center mt-4'>{error.msg}</div>
+            )}
           </form>
         </>
       ) : (

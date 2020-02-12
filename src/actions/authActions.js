@@ -4,6 +4,8 @@ const auth = firebase.auth();
 
 export const getUser = dispatch => {
   try {
+    // User loading
+    dispatch(userLoading());
     auth.onAuthStateChanged(user => {
       if (user) {
         const { uid, email } = user;
@@ -13,12 +15,15 @@ export const getUser = dispatch => {
         });
       } else {
         dispatch({
-          type: 'AUTH_ERROR'
+          type: 'AUTH_FAIL'
         });
       }
     });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code, 'AUTH_FAIL'));
+    dispatch({
+      type: 'AUTH_FAIL'
+    });
   }
 };
 
@@ -31,7 +36,7 @@ export const register = (user, dispatch) => {
     .then(cred => {
       const { uid, email } = cred.user;
       dispatch({
-        type: 'REGISTER',
+        type: 'REGISTER_SUCCESS',
         payload: { uid, email }
       });
     })
@@ -52,7 +57,7 @@ export const login = (user, dispatch) => {
     .then(cred => {
       const { uid, email } = cred.user;
       dispatch({
-        type: 'LOGIN',
+        type: 'LOGIN_SUCCESS',
         payload: { uid, email }
       });
     })
@@ -69,7 +74,7 @@ export const logout = dispatch => {
     .signOut()
     .then(() => {
       dispatch({
-        type: 'LOGOUT'
+        type: 'LOGOUT_SUCCESS'
       });
     })
     .catch(err => {

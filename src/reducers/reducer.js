@@ -12,27 +12,10 @@ export const reducer = (state, action) => {
         }
       };
 
-    case 'EDIT_PROJECT':
-      return {
-        ...state,
-        project: {
-          projects: state.project.projects.map(project =>
-            project.id === action.payload.id
-              ? {
-                  // Update the project
-                  ...project,
-                  title: action.payload.title,
-                  content: action.payload.content
-                }
-              : project
-          ),
-          isListening: state.project.isListening,
-          isLoading: state.project.isLoading
-        }
-      };
-
     case 'CREATE_PROJECT':
+    case 'EDIT_PROJECT':
     case 'DELETE_PROJECT':
+      // Managed by listener
       return {
         ...state
       };
@@ -59,11 +42,11 @@ export const reducer = (state, action) => {
         }
       };
 
-    case 'AUTH_ERROR':
-    case 'LOGOUT':
-    case 'LOGOUT_FAIL':
+    case 'AUTH_FAIL':
     case 'LOGIN_FAIL':
     case 'REGISTER_FAIL':
+    case 'LOGOUT_SUCCESS':
+    case 'LOGOUT_FAIL':
       return {
         ...state,
         auth: {
@@ -73,8 +56,9 @@ export const reducer = (state, action) => {
         }
       };
 
-    case 'LOGIN':
-    case 'REGISTER':
+    case 'LOGIN_SUCCESS':
+    case 'REGISTER_SUCCESS':
+      // Managed by listener
       return {
         ...state
       };

@@ -13,7 +13,7 @@ const ContextProvider = ({ children }) => {
     auth: {
       user: null,
       isListening: false,
-      isLoading: true
+      isLoading: false
     },
     error: {
       msg: null,

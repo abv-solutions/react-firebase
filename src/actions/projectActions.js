@@ -9,11 +9,27 @@ export const getProjects = (projects, dispatch) => {
       .orderBy('title')
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
+          // Add change
           if (change.type === 'added') {
             let project = change.doc.data();
             project.id = change.doc.id;
             projects.push(project);
-          } else if (change.type === 'removed') {
+          }
+          // Edit change
+          else if (change.type === 'modified') {
+            let payload = change.doc.data();
+            projects = projects.map(project =>
+              project.id === change.doc.id
+                ? {
+                    ...project,
+                    title: payload.title,
+                    content: payload.content
+                  }
+                : project
+            );
+          }
+          // Remove change
+          else if (change.type === 'removed') {
             projects = projects.filter(project => project.id !== change.doc.id);
           }
         });

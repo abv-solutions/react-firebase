@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Context } from '../../contexts/context';
 import { getProjects } from '../../actions/projectActions';
 import { getUser, logout } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
 const Navbar = () => {
   const { state, dispatch } = useContext(Context);
@@ -18,6 +19,7 @@ const Navbar = () => {
   }, [auth.user]);
 
   const onClick = () => {
+    clearErrors(dispatch);
     logout(dispatch);
   };
   const guestLinks = (
