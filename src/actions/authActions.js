@@ -1,43 +1,60 @@
 import firebase from '../config/firebaseConfig';
 import { returnErrors } from './errorActions';
+
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 export const getUser = dispatch => {
-  try {
-    // User loading
-    dispatch(userLoading());
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        const { uid, email } = user;
-        dispatch({
-          type: 'AUTH_SUCCESS',
-          payload: { uid, email }
+  // User loading
+  dispatch(userLoading());
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      const { uid, email } = user;
+      db.collection('users')
+        .doc(uid)
+        .get()
+        .then(user => {
+          const { name, initials } = user.data();
+          dispatch({
+            type: 'AUTH_SUCCESS',
+            payload: { uid, email, name, initials }
+          });
+        })
+        .catch(err => {
+          dispatch(returnErrors(err.message, err.code, 'AUTH_FAIL'));
+          dispatch({
+            type: 'AUTH_FAIL'
+          });
         });
-      } else {
-        dispatch({
-          type: 'AUTH_FAIL'
-        });
-      }
-    });
-  } catch (err) {
-    dispatch(returnErrors(err.message, err.code, 'AUTH_FAIL'));
-    dispatch({
-      type: 'AUTH_FAIL'
-    });
-  }
+    } else {
+      dispatch({
+        type: 'AUTH_FAIL'
+      });
+    }
+  });
 };
 
 export const register = (user, dispatch) => {
-  const { email, password } = user;
+  const { name, email, password } = user;
   // User loading
   dispatch(userLoading());
   auth
     .createUserWithEmailAndPassword(email, password)
     .then(cred => {
-      const { uid, email } = cred.user;
+      return db
+        .collection('users')
+        .doc(cred.user.uid)
+        .set({
+          name: name,
+          initials: name
+            .split(' ')
+            .map((w, i, n) => (i === 0 || i + 1 === n.length ? w[0] : null))
+            .join('')
+        });
+    })
+    .then(() => {
       dispatch({
-        type: 'REGISTER_SUCCESS',
-        payload: { uid, email }
+        type: 'REGISTER_SUCCESS'
       });
     })
     .catch(err => {
@@ -54,11 +71,9 @@ export const login = (user, dispatch) => {
   dispatch(userLoading());
   auth
     .signInWithEmailAndPassword(email, password)
-    .then(cred => {
-      const { uid, email } = cred.user;
+    .then(() => {
       dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: { uid, email }
+        type: 'LOGIN_SUCCESS'
       });
     })
     .catch(err => {

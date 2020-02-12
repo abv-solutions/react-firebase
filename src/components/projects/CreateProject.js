@@ -7,7 +7,6 @@ const CreateProject = props => {
   const { state, dispatch } = useContext(Context);
   const { auth } = state;
   const [localState, setState] = useState({
-    author: 'Andrei',
     title: '',
     content: '',
     vTitle: 'form-control',
@@ -28,9 +27,10 @@ const CreateProject = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const { author, title, content } = localState;
+    const { title, content } = localState;
     const newProject = {
-      author,
+      author: auth.user.name,
+      authorID: auth.user.uid,
       title,
       content
     };

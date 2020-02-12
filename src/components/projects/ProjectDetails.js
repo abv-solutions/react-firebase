@@ -11,7 +11,8 @@ const ProjectDetails = props => {
   const [localState, setState] = useState({
     author: '',
     title: '',
-    content: ''
+    content: '',
+    createdAt: ''
   });
 
   useEffect(() => {
@@ -21,12 +22,20 @@ const ProjectDetails = props => {
 
   useEffect(() => {
     !project.isLoading &&
-      project.projects.forEach(({ id, author, title, content }) => {
+      project.projects.forEach(({ id, author, title, content, createdAt }) => {
         if (id === props.match.params.id) {
           setState({
             author,
             title,
-            content
+            content,
+            createdAt: createdAt.toDate().toLocaleString('en-gb', {
+              hour12: false,
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            })
           });
         }
       });
@@ -54,7 +63,7 @@ const ProjectDetails = props => {
             <strong>Posted by&nbsp;</strong>
             {localState.author}
           </p>
-          <p>3rd September, 4pm</p>
+          <p>{localState.createdAt}</p>
           <button
             className='btn btn-info mr-3'
             onClick={() => onEditClick(props.match.params.id)}

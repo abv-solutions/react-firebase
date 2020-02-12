@@ -51,7 +51,7 @@ const Navbar = () => {
       </li>
       <li className='nav-item'>
         <Link className='btn btn-info btn-circle' to='/'>
-          AS
+          {auth.user && auth.user.initials}
         </Link>
       </li>
     </>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const ProjectList = props => {
-  const { id, author, content, title } = props.project;
+  const { id, author, content, title, createdAt } = props.project;
   const [excerpt, setState] = useState('');
 
   useEffect(() => {
@@ -37,7 +37,14 @@ const ProjectList = props => {
           {author}
           <br />
           <i className='fas fa-calendar-alt text-info mr-2'></i>
-          3rd September, 4pm
+          {createdAt.toDate().toLocaleString('en-gb', {
+            hour12: false,
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+          })}
         </p>
       </div>
     </Link>

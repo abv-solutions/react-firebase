@@ -46,7 +46,8 @@ export const getProjects = (projects, dispatch) => {
 export const createProject = (project, dispatch) => {
   db.collection('projects')
     .add({
-      ...project
+      ...project,
+      createdAt: new Date()
     })
     .then(() => {
       dispatch({
