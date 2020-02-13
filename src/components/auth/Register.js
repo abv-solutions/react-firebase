@@ -118,7 +118,9 @@ const Register = props => {
               className='btn btn-dark btn-block mt-4'
             ></input>
             {error.code && (
-              <div class='alert alert-danger text-center mt-4'>{error.msg}</div>
+              <div className='alert alert-danger text-center mt-4'>
+                {error.msg}
+              </div>
             )}
           </form>
         </>
