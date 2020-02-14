@@ -19,6 +19,11 @@ const ContextProvider = ({ children }) => {
       msg: null,
       code: null,
       type: null
+    },
+    log: {
+      logs: [],
+      isListening: false,
+      isLoading: false
     }
   };
 

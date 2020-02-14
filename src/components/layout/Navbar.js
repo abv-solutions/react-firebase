@@ -5,13 +5,15 @@ import { Context } from '../../contexts/context';
 import { getProjects } from '../../actions/projectActions';
 import { getUser, logout } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
+import { getLogs } from '../../actions/logActions';
 
 const Navbar = () => {
   const { state, dispatch } = useContext(Context);
-  const { project, auth } = state;
+  const { project, auth, log } = state;
 
   useEffect(() => {
     !auth.isListening && getUser(dispatch);
+    !log.isListening && auth.user && getLogs(log.logs, dispatch);
     !project.isListening &&
       auth.user &&
       getProjects(project.projects, dispatch);

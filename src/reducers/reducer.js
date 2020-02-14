@@ -95,6 +95,28 @@ export const reducer = (state, action) => {
         }
       };
 
+    // Project reducer
+
+    case 'GET_LOGS':
+      return {
+        ...state,
+        log: {
+          logs: action.payload,
+          isListening: true,
+          isLoading: false
+        }
+      };
+
+    case 'LOGS_LOADING':
+      return {
+        ...state,
+        log: {
+          logs: state.project.logs,
+          isListening: state.log.logs,
+          isLoading: true
+        }
+      };
+
     default:
       return state;
   }

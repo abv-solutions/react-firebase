@@ -6,14 +6,14 @@ export const getProjects = (projects, dispatch) => {
     // Projects loading
     dispatch(projectsLoading());
     db.collection('projects')
-      .orderBy('title')
+      .orderBy('createdAt')
       .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => {
           // Add change
           if (change.type === 'added') {
             let project = change.doc.data();
             project.id = change.doc.id;
-            projects.push(project);
+            projects.unshift(project);
           }
           // Edit change
           else if (change.type === 'modified') {
