@@ -1,14 +1,22 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+var admin = require('firebase-admin');
+var serviceAccount = require('./key.json');
 
-const createLog = log => {
-  admin
-    .firestore()
-    .collection('logs')
-    .add(log)
-    .then(() => console.log('Log added'))
-    .catch(err => console.log(err));
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://react-abv-solutions.firebaseio.com'
+});
+
+const createLog = async log => {
+  try {
+    await admin
+      .firestore()
+      .collection('logs')
+      .add(log);
+    console.log('Log added');
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.projectCreated = functions.firestore
@@ -20,20 +28,44 @@ exports.projectCreated = functions.firestore
       user: project.author,
       time: admin.firestore.FieldValue.serverTimestamp()
     };
-
     createLog(log);
-    return true;
+    return null;
+  });
+
+exports.projectDeleted = functions.firestore
+  .document('projects/{projectID}')
+  .onDelete(doc => {
+    const project = doc.data();
+    const log = {
+      content: 'Deleted a project',
+      user: project.author,
+      time: admin.firestore.FieldValue.serverTimestamp()
+    };
+    createLog(log);
+    return null;
   });
 
 exports.userRegistered = functions.firestore
   .document('users/{userID}')
   .onCreate(doc => {
-    const newUser = doc.data();
+    const user = doc.data();
     const log = {
       content: 'Joined the club',
-      user: newUser.name,
+      user: `${user.firstName} ${user.lastName}`,
       time: admin.firestore.FieldValue.serverTimestamp()
     };
     createLog(log);
-    return true;
+    return null;
   });
+
+exports.userLoggedIn = functions.https.onCall(name => {
+  if (name) {
+    const log = {
+      content: 'Is back',
+      user: name,
+      time: admin.firestore.FieldValue.serverTimestamp()
+    };
+    createLog(log);
+  }
+  return null;
+});

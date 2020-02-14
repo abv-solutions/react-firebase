@@ -14,6 +14,7 @@ const ProjectList = () => {
       <div className='col-md-6'>
         <h4 className='mb-4 text-center'>Projects</h4>
         {!project.isLoading ? (
+          project.projects &&
           project.projects.map(project => (
             <Project project={project} key={project.id} />
           ))

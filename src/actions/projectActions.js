@@ -43,47 +43,51 @@ export const getProjects = (projects, dispatch) => {
   }
 };
 
-export const createProject = (project, dispatch) => {
-  db.collection('projects')
-    .add({
+export const createProject = async (project, dispatch) => {
+  try {
+    await db.collection('projects').add({
       ...project,
       createdAt: new Date()
-    })
-    .then(() => {
-      dispatch({
-        type: 'CREATE_PROJECT'
-      });
-    })
-    .catch(err => console.log(err.message));
+    });
+    dispatch({
+      type: 'CREATE_PROJECT'
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
-export const editProject = (project, dispatch) => {
-  const { id, title, content } = project;
-  db.collection('projects')
-    .doc(id)
-    .update({
-      title,
-      content
-    })
-    .then(() => {
-      dispatch({
-        type: 'EDIT_PROJECT',
-        payload: project
+export const editProject = async (project, dispatch) => {
+  try {
+    const { id, title, content } = project;
+    await db
+      .collection('projects')
+      .doc(id)
+      .update({
+        title,
+        content
       });
-    })
-    .catch(err => console.log(err.message));
+    dispatch({
+      type: 'EDIT_PROJECT',
+      payload: project
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
-export const deleteProject = (id, dispatch) => {
-  db.collection('projects')
-    .doc(id)
-    .delete()
-    .then(() => {
-      dispatch({
-        type: 'DELETE_PROJECT'
-      });
-    })
-    .catch(err => console.log(err.message));
+export const deleteProject = async (id, dispatch) => {
+  try {
+    await db
+      .collection('projects')
+      .doc(id)
+      .delete();
+    dispatch({
+      type: 'DELETE_PROJECT'
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 // Set loading flag - used locally
