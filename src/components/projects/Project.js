@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const ProjectList = props => {
+const Project = props => {
   const { id, author, content, title, createdAt } = props.project;
   const [excerpt, setState] = useState('');
 
@@ -23,32 +23,42 @@ const ProjectList = props => {
     <Link className='card mb-4 shadow project' to={`/project/${id}`}>
       <div className='card-body'>
         <h5 className='text-info'>{title}</h5>
-        <p className='card-text'>
-          <strong>
-            <i className='fas fa-edit text-info mr-1'></i>
-            Excerpt:&nbsp;
-          </strong>
-          {excerpt}
-          <br />
-          <strong>
-            <i className='fas fa-user text-info mr-2' />
-            Posted by&nbsp;
-          </strong>
-          {author}
-          <br />
-          <i className='fas fa-calendar-alt text-info mr-2'></i>
-          {createdAt.toDate().toLocaleString('en-gb', {
-            hour12: false,
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric'
-          })}
-        </p>
+        <div className='card-text'>
+          <div className='project-info mb-2'>
+            <strong>
+              <i className='fas fa-edit fa-lg text-info'></i>
+            </strong>
+            <span>
+              <strong>Excerpt:&nbsp;</strong>
+              {excerpt}
+            </span>
+          </div>
+          <div className='project-info mb-2'>
+            <strong>
+              <i className='fas fa-user fa-lg text-info' />
+            </strong>
+            <span>
+              <strong>Posted by&nbsp;</strong>
+              {author}
+            </span>
+          </div>
+          <div className='project-info mb-2'>
+            <i className='fas fa-calendar-alt fa-lg text-info'></i>
+            <span>
+              {createdAt.toDate().toLocaleString('en-gb', {
+                hour12: false,
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+              })}
+            </span>
+          </div>
+        </div>
       </div>
     </Link>
   );
 };
 
-export default ProjectList;
+export default Project;

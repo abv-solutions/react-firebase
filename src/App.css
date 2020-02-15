@@ -17,6 +17,29 @@
   transform: scale(1.05, 1.05);
 }
 
+.log {
+  display: grid;
+  grid-template-columns: 20px auto;
+  align-items: center;
+  gap: 15px;
+}
+
+.log i {
+  text-align: center;
+}
+
+.project-info {
+  display: grid;
+  grid-template-columns: 20px auto;
+  align-items: center;
+  gap: 15px;
+}
+
+.project-info strong,
+.project-info i {
+  text-align: center;
+}
+
 @media only screen and (max-width: 575px) {
   .btn-circle {
     margin: 0.5rem 0 0.5rem 0;

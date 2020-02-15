@@ -11,7 +11,7 @@ const ProjectList = () => {
 
   return (
     <>
-      <div className='col-md-6'>
+      <div className='col-md-7'>
         <h4 className='mb-4 text-center'>Projects</h4>
         {!project.isLoading ? (
           project.projects &&
