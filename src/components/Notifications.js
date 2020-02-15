@@ -18,7 +18,7 @@ const Notifications = () => {
             <li key={log.id} className='list-group-item list-group-item-info'>
               <i className='fas fa-bell'></i>
               <small>
-                <span className='font-weight-bold px-1'>{log.user}</span>
+                <span className='font-weight-bold pl-3 pr-2'>{log.user}</span>
                 {log.content}
               </small>
             </li>
