@@ -28,6 +28,15 @@
   text-align: center;
 }
 
+.log-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.log-info small {
+  flex-grow: 1;
+}
+
 .project-info {
   display: grid;
   grid-template-columns: 20px auto;

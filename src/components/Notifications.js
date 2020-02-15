@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import moment from 'moment';
 
 import { Context } from '../contexts/context';
 
@@ -14,7 +15,7 @@ const Notifications = () => {
       <ul className='list-group' style={{ WebkitUserSelect: 'none' }}>
         {!log.isLoading ? (
           log.logs &&
-          log.logs.map((log, i) => (
+          log.logs.map(log => (
             <li
               key={log.id}
               className={`${
@@ -32,10 +33,17 @@ const Notifications = () => {
                     : 'bell'
                 } fas fa-lg`}
               ></i>
-              <small>
-                <span className='font-weight-bold'>{log.user} &bull; </span>
-                {log.content}
-              </small>
+              <div className='log-info'>
+                <small>
+                  <span className='font-weight-bold'>
+                    {log.user}&nbsp;&bull;&nbsp;
+                  </span>
+                  <span>{log.content}</span>
+                </small>
+                <span className='badge badge-info'>
+                  {moment(log.time.toDate() - 1000).fromNow()}
+                </span>
+              </div>
             </li>
           ))
         ) : (

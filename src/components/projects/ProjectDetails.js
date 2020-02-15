@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import moment from 'moment';
 
 import { Context } from '../../contexts/context';
 import { deleteProject } from '../../actions/projectActions';
@@ -10,6 +11,7 @@ const ProjectDetails = props => {
   const { project, auth } = state;
   const [localState, setState] = useState({
     author: '',
+    authorID: '',
     title: '',
     content: '',
     createdAt: ''
@@ -22,23 +24,19 @@ const ProjectDetails = props => {
 
   useEffect(() => {
     !project.isLoading &&
-      project.projects.forEach(({ id, author, title, content, createdAt }) => {
-        if (id === props.match.params.id) {
-          setState({
-            author,
-            title,
-            content,
-            createdAt: createdAt.toDate().toLocaleString('en-gb', {
-              hour12: false,
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: 'numeric'
-            })
-          });
+      project.projects.forEach(
+        ({ id, author, authorID, title, content, createdAt }) => {
+          if (id === props.match.params.id) {
+            setState({
+              author,
+              authorID,
+              title,
+              content,
+              createdAt: moment(createdAt.toDate()).calendar()
+            });
+          }
         }
-      });
+      );
     // eslint-disable-next-line
   }, [project]);
 
@@ -64,18 +62,22 @@ const ProjectDetails = props => {
             {localState.author}
           </p>
           <p>{localState.createdAt}</p>
-          <button
-            className='btn btn-info mr-3'
-            onClick={() => onEditClick(props.match.params.id)}
-          >
-            Edit
-          </button>
-          <button
-            className='btn btn-danger'
-            onClick={() => onDeleteClick(props.match.params.id)}
-          >
-            Delete
-          </button>
+          {auth.user.uid === localState.authorID && (
+            <>
+              <button
+                className='btn btn-info mr-3'
+                onClick={() => onEditClick(props.match.params.id)}
+              >
+                Edit
+              </button>
+              <button
+                className='btn btn-danger'
+                onClick={() => onDeleteClick(props.match.params.id)}
+              >
+                Delete
+              </button>
+            </>
+          )}
         </div>
       ) : (
         <Spinner />

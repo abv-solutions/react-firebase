@@ -22,14 +22,16 @@ const EditProject = props => {
   }, [auth.user]);
 
   useEffect(() => {
-    project.projects.forEach(({ id, author, title, content }) => {
+    project.projects.forEach(({ id, author, authorID, title, content }) => {
       if (id === props.match.params.id) {
-        setState({
-          ...localState,
-          author,
-          title,
-          content
-        });
+        auth.user.uid !== authorID
+          ? props.history.push(`/project/${id}`)
+          : setState({
+              ...localState,
+              author,
+              title,
+              content
+            });
       }
     });
     // eslint-disable-next-line

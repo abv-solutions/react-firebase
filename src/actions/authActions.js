@@ -22,8 +22,8 @@ export const getUser = dispatch => {
           payload: {
             uid,
             email,
-            name: `${firstName} ${lastName}`,
-            initials
+            name: firstName ? `${firstName} ${lastName}` : 'J. Doe',
+            initials: initials ? initials : 'JD'
           }
         });
       } else {
@@ -46,7 +46,6 @@ export const register = async (user, dispatch) => {
     dispatch(userLoading());
     const { name, email, password } = user;
     const cred = await auth.createUserWithEmailAndPassword(email, password);
-    await cred.user.updateProfile({ displayName: name });
     await db
       .collection('users')
       .doc(cred.user.uid)
@@ -58,6 +57,7 @@ export const register = async (user, dispatch) => {
           .map((w, i, n) => (i === 0 || i + 1 === n.length ? w[0] : null))
           .join('')
       });
+    await cred.user.updateProfile({ displayName: name });
     dispatch({
       type: 'REGISTER_SUCCESS'
     });

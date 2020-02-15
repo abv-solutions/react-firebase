@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const Project = props => {
   const { id, author, content, title, createdAt } = props.project;
@@ -44,16 +45,7 @@ const Project = props => {
           </div>
           <div className='project-info mb-2'>
             <i className='fas fa-calendar-alt fa-lg text-info'></i>
-            <span>
-              {createdAt.toDate().toLocaleString('en-gb', {
-                hour12: false,
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
-              })}
-            </span>
+            <span>{moment(createdAt.toDate()).calendar()}</span>
           </div>
         </div>
       </div>
