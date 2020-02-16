@@ -1,4 +1,6 @@
 import firebase from '../config/firebaseConfig';
+import { returnErrors } from './errorActions';
+
 const db = firebase.firestore();
 
 export const getProjects = (projects, dispatch) => {
@@ -39,7 +41,7 @@ export const getProjects = (projects, dispatch) => {
         });
       });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code));
   }
 };
 
@@ -53,7 +55,7 @@ export const createProject = async (project, dispatch) => {
       type: 'CREATE_PROJECT'
     });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code));
   }
 };
 
@@ -72,7 +74,7 @@ export const editProject = async (project, dispatch) => {
       payload: project
     });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code));
   }
 };
 
@@ -86,7 +88,7 @@ export const deleteProject = async (id, dispatch) => {
       type: 'DELETE_PROJECT'
     });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code));
   }
 };
 

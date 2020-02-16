@@ -32,7 +32,7 @@ export const getUser = dispatch => {
         });
       }
     } catch (err) {
-      dispatch(returnErrors(err.message, err.code, 'AUTH_FAIL'));
+      dispatch(returnErrors(err.message, err.code));
       dispatch({
         type: 'AUTH_FAIL'
       });
@@ -62,7 +62,7 @@ export const register = async (user, dispatch) => {
       type: 'REGISTER_SUCCESS'
     });
   } catch (err) {
-    dispatch(returnErrors(err.message, err.code, 'REGISTER_FAIL'));
+    dispatch(returnErrors(err.message, err.code));
     dispatch({
       type: 'REGISTER_FAIL'
     });
@@ -81,7 +81,7 @@ export const login = async (user, dispatch) => {
       type: 'LOGIN_SUCCESS'
     });
   } catch (err) {
-    dispatch(returnErrors(err.message, err.code, 'LOGIN_FAIL'));
+    dispatch(returnErrors(err.message, err.code));
     dispatch({
       type: 'LOGIN_FAIL'
     });
@@ -95,7 +95,7 @@ export const logout = async dispatch => {
       type: 'LOGOUT_SUCCESS'
     });
   } catch (err) {
-    dispatch(returnErrors(err.message, err.code, 'LOGOUT_FAIL'));
+    dispatch(returnErrors(err.message, err.code));
     dispatch({
       type: 'LOGOUT_FAIL'
     });
