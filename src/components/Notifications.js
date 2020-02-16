@@ -41,7 +41,7 @@ const Notifications = () => {
                   <span>{log.content}</span>
                 </small>
                 <span className='badge badge-info'>
-                  {moment(log.time.toDate() - 1000).fromNow()}
+                  {moment(log.time.toDate() - 2000).fromNow()}
                 </span>
               </div>
             </li>
