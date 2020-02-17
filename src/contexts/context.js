@@ -8,7 +8,8 @@ const ContextProvider = ({ children }) => {
     project: {
       projects: [],
       isListening: false,
-      isLoading: false
+      isLoading: false,
+      percentage: 0
     },
     auth: {
       user: null,

@@ -12,3 +12,11 @@ export const clearErrors = dispatch => {
     type: 'CLEAR_ERRORS'
   });
 };
+
+// Send errors - used from components
+export const sendErrors = (msg, code, type = null, dispatch) => {
+  dispatch({
+    type: 'GET_ERRORS',
+    payload: { msg, code, type }
+  });
+};

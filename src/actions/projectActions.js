@@ -25,7 +25,8 @@ export const getProjects = (projects, dispatch) => {
                 ? {
                     ...project,
                     title: payload.title,
-                    content: payload.content
+                    content: payload.content,
+                    files: payload.files
                   }
                 : project
             );

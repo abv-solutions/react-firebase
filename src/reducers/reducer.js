@@ -8,7 +8,8 @@ export const reducer = (state, action) => {
         project: {
           projects: action.payload,
           isListening: true,
-          isLoading: false
+          isLoading: false,
+          percentage: state.project.percentage
         }
       };
 
@@ -26,7 +27,8 @@ export const reducer = (state, action) => {
         project: {
           projects: state.project.projects,
           isListening: state.project.isListening,
-          isLoading: true
+          isLoading: true,
+          percentage: state.project.percentage
         }
       };
 
@@ -115,6 +117,24 @@ export const reducer = (state, action) => {
           isListening: state.log.logs,
           isLoading: true
         }
+      };
+
+    // File reducer
+
+    case 'UPLOAD_FILE':
+      return {
+        ...state,
+        project: {
+          projects: state.project.projects,
+          isListening: state.project.isListening,
+          isLoading: state.project.isLoading,
+          percentage: action.payload
+        }
+      };
+
+    case 'UPLOAD_COMPLETE':
+      return {
+        ...state
       };
 
     default:
