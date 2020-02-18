@@ -99,24 +99,22 @@ const ProjectDetails = props => {
             {localState.author}
           </p>
           <p>{localState.createdAt}</p>
+          <div>
+            {localState.files &&
+              localState.files.map((file, i) => (
+                <a
+                  href={file.url}
+                  key={i}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <span className='badge badge-info mr-2'>{file.fileName}</span>
+                </a>
+              ))}
+          </div>
+          <hr />
           {auth.user.uid === localState.authorID && (
             <>
-              <div>
-                {localState.files &&
-                  localState.files.map((file, i) => (
-                    <a
-                      href={file.url}
-                      key={i}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      <span className='badge badge-info mr-2'>
-                        {file.fileName}
-                      </span>
-                    </a>
-                  ))}
-              </div>
-              <hr />
               <button
                 className='btn btn-info mr-3'
                 onClick={() => onEditClick(props.match.params.id)}

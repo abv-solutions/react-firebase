@@ -75,8 +75,8 @@ export const login = async (user, dispatch) => {
     dispatch(userLoading());
     const { email, password } = user;
     const callFunction = functions.httpsCallable('userLoggedIn');
-    const cred = await auth.signInWithEmailAndPassword(email, password);
-    cred.user.displayName && callFunction(cred.user.displayName);
+    await auth.signInWithEmailAndPassword(email, password);
+    callFunction();
     dispatch({
       type: 'LOGIN_SUCCESS'
     });

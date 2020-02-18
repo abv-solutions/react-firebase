@@ -30,6 +30,8 @@ const Notifications = () => {
                     ? 'plus'
                     : log.content.includes('Deleted')
                     ? 'times'
+                    : log.content.includes('Was')
+                    ? 'file'
                     : 'bell'
                 } fas fa-lg`}
               ></i>

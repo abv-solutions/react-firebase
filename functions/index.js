@@ -58,7 +58,8 @@ exports.userRegistered = functions.firestore
     return null;
   });
 
-exports.userLoggedIn = functions.https.onCall(name => {
+exports.userLoggedIn = functions.https.onCall((data, context) => {
+  const name = context.auth.token.name || null;
   if (name) {
     const log = {
       content: 'Is back',
@@ -67,5 +68,15 @@ exports.userLoggedIn = functions.https.onCall(name => {
     };
     createLog(log);
   }
+  return null;
+});
+
+exports.fileAdded = functions.storage.object().onFinalize(object => {
+  const log = {
+    content: 'Was added',
+    user: 'New file',
+    time: admin.firestore.FieldValue.serverTimestamp()
+  };
+  createLog(log);
   return null;
 });
