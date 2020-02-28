@@ -1,4 +1,4 @@
-export const reducer = (state, action) => {
+export default (state, action) => {
   switch (action.type) {
     // Project reducer
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { Context } from '../../contexts/context';
+import { Context } from '../../context/globalState';
 import { createProject } from '../../actions/projectActions';
 
 const CreateProject = props => {

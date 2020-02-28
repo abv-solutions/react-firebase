@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import moment from 'moment';
 
-import { Context } from '../../contexts/context';
+import { Context } from '../../context/globalState';
 import { deleteProject } from '../../actions/projectActions';
 import { uploadFile } from '../../actions/fileActions';
 import { clearErrors, sendErrors } from '../../actions/errorActions';

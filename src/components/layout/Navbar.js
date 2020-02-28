@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Context } from '../../contexts/context';
+import { Context } from '../../context/globalState';
 import { getProjects } from '../../actions/projectActions';
 import { getUser, logout } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import ContextProvider from './contexts/context';
+import ContextProvider from './context/globalState';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';

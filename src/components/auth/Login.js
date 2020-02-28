@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { Context } from '../../contexts/context';
+import { Context } from '../../context/globalState';
 import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 import Spinner from '../layout/Spinner';

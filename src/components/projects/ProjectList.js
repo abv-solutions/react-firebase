@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { Context } from '../../contexts/context';
+import { Context } from '../../context/globalState';
 
 import Spinner from '../layout/Spinner';
 import Project from '../projects/Project';

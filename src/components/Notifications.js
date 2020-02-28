@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 
-import { Context } from '../contexts/context';
+import { Context } from '../context/globalState';
 
 import Spinner from './layout/Spinner';
 
