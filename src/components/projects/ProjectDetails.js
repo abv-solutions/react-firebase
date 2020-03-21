@@ -69,7 +69,7 @@ const ProjectDetails = props => {
       localState.file.size / 1024 / 1024 < 15
         ? uploadFile(localState.file, id, dispatch)
         : sendErrors(
-            'File size must not exceed 15MB',
+            'File size must not exceed 15MB.',
             'storage/unauthorized',
             null,
             dispatch

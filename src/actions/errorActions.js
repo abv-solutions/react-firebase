@@ -8,9 +8,7 @@ export const returnErrors = (msg, code, type = null) => {
 
 // Clear errors - used from components
 export const clearErrors = dispatch => {
-  dispatch({
-    type: 'CLEAR_ERRORS'
-  });
+  dispatch({ type: 'CLEAR_ERRORS' });
 };
 
 // Send errors - used from components

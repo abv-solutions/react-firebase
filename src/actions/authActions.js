@@ -27,15 +27,11 @@ export const getUser = dispatch => {
           }
         });
       } else {
-        dispatch({
-          type: 'AUTH_FAIL'
-        });
+        dispatch({ type: 'AUTH_FAIL' });
       }
     } catch (err) {
       dispatch(returnErrors(err.message, err.code));
-      dispatch({
-        type: 'AUTH_FAIL'
-      });
+      dispatch({ type: 'AUTH_FAIL' });
     }
   });
 };
@@ -58,14 +54,10 @@ export const register = async (user, dispatch) => {
           .join('')
       });
     await cred.user.updateProfile({ displayName: name });
-    dispatch({
-      type: 'REGISTER_SUCCESS'
-    });
+    dispatch({ type: 'REGISTER_SUCCESS' });
   } catch (err) {
     dispatch(returnErrors(err.message, err.code));
-    dispatch({
-      type: 'REGISTER_FAIL'
-    });
+    dispatch({ type: 'REGISTER_FAIL' });
   }
 };
 
@@ -74,37 +66,37 @@ export const login = async (user, dispatch) => {
     // User loading
     dispatch(userLoading());
     const { email, password } = user;
-    const callFunction = functions.httpsCallable('userLoggedIn');
+    const userLoggedIn = functions.httpsCallable('userLoggedIn');
     await auth.signInWithEmailAndPassword(email, password);
-    callFunction();
-    dispatch({
-      type: 'LOGIN_SUCCESS'
-    });
+    userLoggedIn();
+    dispatch({ type: 'LOGIN_SUCCESS' });
   } catch (err) {
     dispatch(returnErrors(err.message, err.code));
-    dispatch({
-      type: 'LOGIN_FAIL'
-    });
+    dispatch({ type: 'LOGIN_FAIL' });
   }
 };
 
 export const logout = async dispatch => {
   try {
     await auth.signOut();
-    dispatch({
-      type: 'LOGOUT_SUCCESS'
-    });
+    dispatch({ type: 'LOGOUT_SUCCESS' });
   } catch (err) {
     dispatch(returnErrors(err.message, err.code));
-    dispatch({
-      type: 'LOGOUT_FAIL'
-    });
+    dispatch({ type: 'LOGOUT_FAIL' });
+  }
+};
+
+export const deleteUser = async dispatch => {
+  try {
+    await auth.currentUser.delete();
+    dispatch({ type: 'DELETE_SUCCESS' });
+  } catch (err) {
+    dispatch(returnErrors(err.message, err.code));
+    dispatch({ type: 'DELETE_FAIL' });
   }
 };
 
 // Set loading flag - used locally
 export const userLoading = () => {
-  return {
-    type: 'AUTH_LOADING'
-  };
+  return { type: 'AUTH_LOADING' };
 };

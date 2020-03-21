@@ -52,9 +52,7 @@ export const createProject = async (project, dispatch) => {
       ...project,
       createdAt: new Date()
     });
-    dispatch({
-      type: 'CREATE_PROJECT'
-    });
+    dispatch({ type: 'CREATE_PROJECT' });
   } catch (err) {
     dispatch(returnErrors(err.message, err.code));
   }
@@ -85,9 +83,7 @@ export const deleteProject = async (id, dispatch) => {
       .collection('projects')
       .doc(id)
       .delete();
-    dispatch({
-      type: 'DELETE_PROJECT'
-    });
+    dispatch({ type: 'DELETE_PROJECT' });
   } catch (err) {
     dispatch(returnErrors(err.message, err.code));
   }
@@ -95,7 +91,5 @@ export const deleteProject = async (id, dispatch) => {
 
 // Set loading flag - used locally
 export const projectsLoading = () => {
-  return {
-    type: 'PROJECTS_LOADING'
-  };
+  return { type: 'PROJECTS_LOADING' };
 };

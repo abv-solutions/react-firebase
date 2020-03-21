@@ -32,6 +32,10 @@ const Notifications = () => {
                     ? 'times'
                     : log.content.includes('Was')
                     ? 'file'
+                    : log.content.includes('Joined')
+                    ? 'user-plus'
+                    : log.content.includes('Left')
+                    ? 'user-times'
                     : 'bell'
                 } fas fa-lg`}
               ></i>
@@ -43,7 +47,7 @@ const Notifications = () => {
                   <span>{log.content}</span>
                 </small>
                 <span className='badge badge-info'>
-                  {moment(log.time.toDate() - 2000).fromNow()}
+                  {moment(log.time.toDate() - 10000).fromNow()}
                 </span>
               </div>
             </li>

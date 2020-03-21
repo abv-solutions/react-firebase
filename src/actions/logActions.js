@@ -29,7 +29,5 @@ export const getLogs = (logs, dispatch) => {
 
 // Set loading flag - used locally
 export const logsLoading = () => {
-  return {
-    type: 'LOGS_LOADING'
-  };
+  return { type: 'LOGS_LOADING' };
 };

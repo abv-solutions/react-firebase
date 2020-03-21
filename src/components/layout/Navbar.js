@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Context } from '../../context/globalState';
 import { getProjects } from '../../actions/projectActions';
-import { getUser, logout } from '../../actions/authActions';
+import { getUser, logout, deleteUser } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 import { getLogs } from '../../actions/logActions';
 
@@ -20,10 +20,16 @@ const Navbar = () => {
     // eslint-disable-next-line
   }, [auth.user]);
 
-  const onClick = () => {
+  const onLogoutClick = () => {
     clearErrors(dispatch);
     logout(dispatch);
   };
+
+  const onDeleteClick = () => {
+    clearErrors(dispatch);
+    deleteUser(dispatch);
+  };
+
   const guestLinks = (
     <>
       <li className='nav-item'>
@@ -47,12 +53,16 @@ const Navbar = () => {
         </Link>
       </li>
       <li className='nav-item'>
-        <Link onClick={onClick} className='nav-link' to='/'>
+        <Link onClick={onLogoutClick} className='nav-link' to='/'>
           Logout
         </Link>
       </li>
       <li className='nav-item'>
-        <Link className='btn btn-info btn-circle' to='/'>
+        <Link
+          onClick={onDeleteClick}
+          className='btn btn-info btn-circle'
+          to='/'
+        >
           {auth.user && auth.user.initials}
         </Link>
       </li>

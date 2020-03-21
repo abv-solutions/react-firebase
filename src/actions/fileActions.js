@@ -25,7 +25,7 @@ export const uploadFile = async (file, id, dispatch) => {
     found
       ? dispatch(
           returnErrors(
-            'This project already has a file with that name',
+            'This project already has a file with that name.',
             'storage/duplicate'
           )
         )
@@ -63,6 +63,7 @@ export const uploadFile = async (file, id, dispatch) => {
                 .update({
                   files: firebase.firestore.FieldValue.arrayUnion({
                     fileName: file.name,
+                    storageName: `${time}_${file.name}`,
                     url: url
                   })
                 });
