@@ -1,4 +1,5 @@
 import firebase from '../config/firebaseConfig';
+import { returnErrors } from './errorActions';
 const db = firebase.firestore();
 
 export const getLogs = (logs, dispatch) => {
@@ -23,7 +24,7 @@ export const getLogs = (logs, dispatch) => {
         });
       });
   } catch (err) {
-    console.log(err.message);
+    dispatch(returnErrors(err.message, err.code));
   }
 };
 
